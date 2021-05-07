@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @Value("${test.hello}")
+    //获取application.properties的变量值，如果拿不到则为默认值
+    @Value("${test.hello:TEST}")
     private String testValue;
 
     @GetMapping("/hello")
