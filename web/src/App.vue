@@ -2,7 +2,7 @@
   <a-layout>
     <the-header></the-header>
     <router-view/>
-    <t-he-footer></t-he-footer>
+    <t-he-footer>the-footer</t-he-footer>
   </a-layout>
 </template>
 
