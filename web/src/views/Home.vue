@@ -80,12 +80,11 @@ import axios from 'axios'
 export default defineComponent({
   name: 'Home',
   setup(){
-    console.log("setup")
     const ebooks = ref();
     // const ebooks1 = reactive({books: []});
 
     onMounted(()=>{
-      axios.get("http://localhost:8889/ebook/list").then((response) =>{
+      axios.get("/ebook/list").then((response) =>{
         const data = response.data;
         ebooks.value = data.content;
         // ebooks1.books = data.content;
