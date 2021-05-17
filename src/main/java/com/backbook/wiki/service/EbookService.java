@@ -8,6 +8,7 @@ import com.backbook.wiki.req.EbookReq;
 import com.backbook.wiki.resp.EbookResp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ public class EbookService {
     public List<EbookResp> list(EbookReq ebookReq){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        criteria.andNameLike("%"+ebookReq.getName()+"%");
+        if(!ObjectUtils.isEmpty(ebookReq.getName())){
+            criteria.andNameLike("%"+ebookReq.getName()+"%");
+        }
         List<Ebook> ebooks = ebookMapper.selectByExample(ebookExample);
         List<EbookResp> respList = new ArrayList<>();
         for (Ebook ebook : ebooks) {
