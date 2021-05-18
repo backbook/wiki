@@ -20,8 +20,8 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        LOG.info("----LogInterceptor开启----");
-        LOG.info("请求地址：{} {} ", request.getRequestURI(), request.getMethod());
+        LOG.info("--------------LogInterceptor--------------");
+        LOG.info("请求地址：{} {} ", request.getRequestURL(), request.getMethod());
         LOG.info("远程地址：{} ", request.getRemoteAddr());
         long startTime = System.currentTimeMillis();
         request.setAttribute("interceptorRequestStartTime",startTime);
@@ -31,7 +31,7 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         long startTime = (Long) request.getAttribute("interceptorRequestStartTime");
-        LOG.info("-------------LogInterceptor结束 耗时:{}-------------",System.currentTimeMillis() - startTime);
+        LOG.info("-------------LogInterceptor结束 耗时:{} ms-------------",System.currentTimeMillis() - startTime);
     }
 
 }

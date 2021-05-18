@@ -34,4 +34,26 @@ create table `ebook`(
     `view_count`  int comment '阅读数',
     `vote_count`  int comment '点赞数',
     primary key (`id`)
-)engine=innodb default charset=utf8mb4 comment ='电子书信息'
+)engine=innodb default charset=utf8mb4 comment ='电子书信息';
+
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (7, 'c++入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (8, 'c入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (9, 'scala入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (10, 'lua入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (11, 'hive入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count)
+VALUES (12, 'hadoop入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
+
+
+

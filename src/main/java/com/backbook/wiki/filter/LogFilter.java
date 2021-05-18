@@ -25,8 +25,8 @@ public class LogFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         //打印请求信息
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        LOG.info("----LogFilter开启----");
-        LOG.info("请求地址：{} {} ", httpServletRequest.getRequestURI(), httpServletRequest.getMethod());
+        LOG.info("--------------LogFilter--------------");
+        LOG.info("请求地址：{} {} ", httpServletRequest.getRequestURL(), httpServletRequest.getMethod());
         LOG.info("远程地址：{} ", httpServletRequest.getRemoteAddr());
 
         long startTime = System.currentTimeMillis();
