@@ -10,7 +10,7 @@
         @change="handleTableChange"
         >
         <template #cover="{ text: cover }">
-          <image v-if="cover" :src="cover" alt = "avatar" />
+          <img v-if="cover" :width="50" :height="50" :src="cover" alt="avatar" />
         </template>
         <template v-slot:action="{text, action}">
           <a-space size="small">
@@ -124,14 +124,4 @@
 
 
 </script>
-
-<style scoped>
-.ant-avatar{
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 8%;
-  margin: 5px 0;
-}
-</style>
 

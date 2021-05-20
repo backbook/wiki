@@ -62,7 +62,9 @@
               <template #title>
                 <a :href="item.name">{{ item.name }}</a>
               </template>
-              <template #avatar><a-avatar :src="item.cover" /></template>
+              <template #avatar>
+                <a-avatar :src="item.cover" />
+              </template>
             </a-list-item-meta>
           </a-list-item>
         </template>
