@@ -12,9 +12,9 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :width="40" :height="40" :src="cover" alt="avatar" />
         </template>
-        <template v-slot:action="{text, action}">
+        <template v-slot:action="{text, record}">
           <a-space size="small">
-            <a-button type="primary">
+            <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
             <a-button type="danger">
@@ -25,6 +25,12 @@
       </a-table>
     </a-layout-content>
   </a-layout>
+  <a-modal title="电子书表单"
+           v-model:visiable="modalVisiable"
+           :confirm-loading="modalLoading"
+           @ok="handleModalOk">
+      <p>test</p>
+  </a-modal>
 
 </template>
 
@@ -113,6 +119,24 @@
       };
 
 
+      // ---- 表单 ------
+      const modalVisiable = ref(false)
+      const modalLoading = ref(false)
+      const handleModalOk = () => {
+        modalLoading.value = true;
+        setTimeout(()=>{
+          modalVisiable.value = false;
+          modalLoading.value = false;
+        },2000)
+      };
+
+
+      /**
+       * 编辑
+       */
+      const edit = () => {
+        modalVisiable.value = true;
+      }
 
 
       /**
@@ -130,7 +154,11 @@
         pagination,
         columns,
         loading,
-        handleTableChange
+        handleTableChange,
+        edit,
+        modalVisiable,
+        modalLoading,
+        handleModalOk
       }
     }
   });
