@@ -10,7 +10,7 @@
         @change="handleTableChange"
         >
         <template #cover="{ text: cover }">
-          <img v-if="cover" :width="50" :height="50" :src="cover" alt="avatar" />
+          <img v-if="cover" :width="40" :height="40" :src="cover" alt="avatar" />
         </template>
         <template v-slot:action="{text, action}">
           <a-space size="small">
@@ -37,11 +37,12 @@
       const ebooks = ref()
       const pagination = ref({
         current: 1,
-        pageSize: 2,
+        pageSize: 6,
         total: 0
       });
       const loading = ref(false);
 
+      //table的名称和python的dataframe相似
       const columns = [
         {
           title: '封面',
@@ -83,33 +84,45 @@
       /**
        * 数据查询
        */
-      const handleQuery = (parms: any) =>{
+      const handleQuery = (p:  Record<string, number>) =>{
         loading.value = true;
-        axios.get("/ebook/list",parms).then((response) =>{
+        axios.get("/ebook/list",{
+          params: {
+            page: p.page,
+            size: p.size
+          }
+        }).then((response) =>{
           loading.value = false;
           const data = response.data;
-          ebooks.value = data.content;
+          ebooks.value = data.content.list;
           //重置分页按钮
-          pagination.value.current = parms.page;
-
+          pagination.value.current = p.page;
+          pagination.value.total = data.content.total;
         });
       }
 
       /**
        * 表格点击页码时触发
        */
-      const handleTableChange = (pagination: any) => {
+      const handleTableChange = (pagination: Record<string, number>) => {
         console.log("分页自带的参数："+pagination)
         handleQuery({
           page: pagination.current,
           size: pagination.pageSize
         });
       };
+
+
+
+
       /**
        * 初始化触发
        */
       onMounted(()=>{
-        handleQuery({});
+        handleQuery({
+          page: 1,
+          size: pagination.value.pageSize
+        });
       });
 
       return {

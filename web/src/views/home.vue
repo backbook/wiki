@@ -49,7 +49,12 @@
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
 
-      <a-list item-layout="vertical" size="large" :grid="{ gutter:10, column:3}"  :data-source="ebooks">
+      <a-list item-layout="vertical" size="large"
+              :grid="{ gutter:10, column:3}"
+              :loading="Loading"
+              :pagination="pagination"
+              :data-source="ebooks"
+              @change="handleTableChange">
         <template #renderItem="{ item }">
           <a-list-item key="item.name">
             <template #actions>
@@ -83,22 +88,51 @@ export default defineComponent({
   name: 'Home',
   setup(){
     const ebooks = ref();
-    // const ebooks1 = reactive({books: []});
+    const loading = ref(false);
 
     onMounted(()=>{
-      axios.get("/ebook/list").then((response) =>{
-        const data = response.data;
-        ebooks.value = data.content;
-        // ebooks1.books = data.content;
-      });
+      handleQuery(
+          {
+            page: 1,
+            size: pagination.value.pageSize
+          }
+      )
     });
 
-    const pagination = {
-      onChange: (page: number) => {
-        console.log(page);
-      },
-      pageSize: 3,
+    const pagination = ref({
+      current: 1,
+      pageSize: 1000,
+      total: 0
+    });
+
+
+    const handleQuery = (p:  Record<string, number>) =>{
+      loading.value = true;
+      axios.get("/ebook/list",{
+        params: {
+          page: p.page,
+          size: p.size
+        }
+      }).then((response) =>{
+        loading.value = false;
+        const data = response.data;
+        ebooks.value = data.content.list;
+        //重置分页按钮
+        pagination.value.current = p.page;
+        pagination.value.total = data.content.total;
+      });
+    }
+
+    const handleTableChange = (pagination: Record<string, number>) => {
+      handleQuery({
+        page: pagination.current,
+        size: pagination.pageSize
+      });
     };
+
+
+
+
 
     const actions: Record<string, string>[] = [
       { type: 'StarOutlined', text: '156' },
@@ -108,9 +142,10 @@ export default defineComponent({
 
     return{
       ebooks,
-      // ebooks2: toRef(ebooks1, "books"),
       pagination,
       actions,
+      loading,
+      handleTableChange
     }
   }
 });
