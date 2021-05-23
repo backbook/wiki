@@ -25,11 +25,29 @@
       </a-table>
     </a-layout-content>
   </a-layout>
-  <a-modal title="电子书表单"
-           v-model:visiable="modalVisiable"
-           :confirm-loading="modalLoading"
-           @ok="handleModalOk">
-      <p>test</p>
+  <a-modal
+      title="电子书表单"
+      v-model:visible="modalVisible"
+      :confirm-loading="modalLoading"
+      @ok="handleModalOk">
+
+    <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form-item label="封面">
+        <a-input v-model:value="ebook.cover" />
+      </a-form-item>
+      <a-form-item label="名称">
+        <a-input v-model:value="ebook.name" />
+      </a-form-item>
+      <a-form-item label="分类一">
+        <a-input v-model:value="ebook.category1Id"/>
+      </a-form-item>
+      <a-form-item label="分类二">
+          <a-input v-model:value="ebook.category2Id"/>
+      </a-form-item>
+      <a-form-item label="描述">
+        <a-input v-model:value="ebook.description" type="textarea" />
+      </a-form-item>
+    </a-form>
   </a-modal>
 
 </template>
@@ -120,22 +138,34 @@
 
 
       // ---- 表单 ------
-      const modalVisiable = ref(false)
-      const modalLoading = ref(false)
+      const ebook = ref({})
+      const modalVisible = ref<boolean>(false)
+      const modalLoading = ref<boolean>(false)
       const handleModalOk = () => {
         modalLoading.value = true;
-        setTimeout(()=>{
-          modalVisiable.value = false;
-          modalLoading.value = false;
-        },2000)
+        axios.post("/ebook/save",ebook.value).then((response) =>{
+          const data = response.data; //data = commonResp
+          if (data.success){
+            modalLoading.value = false;
+            modalVisible.value = false;
+            //重新加载列表
+            handleQuery({
+              page: pagination.value.current,
+              size: pagination.value.pageSize
+            });
+          }
+
+        });
       };
+
 
 
       /**
        * 编辑
        */
-      const edit = () => {
-        modalVisiable.value = true;
+      const edit = (record:any) => {
+        modalVisible.value = true;
+        ebook.value = record
       }
 
 
@@ -155,8 +185,9 @@
         columns,
         loading,
         handleTableChange,
+        ebook,
         edit,
-        modalVisiable,
+        modalVisible,
         modalLoading,
         handleModalOk
       }

@@ -1,6 +1,6 @@
-package com.backbook.wiki.resp;
+package com.backbook.wiki.req;
 
-public class EbookResp {
+public class EbookSaveReq extends PageReq {
     private Long id;
 
     private String name;

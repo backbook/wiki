@@ -4,8 +4,9 @@ package com.backbook.wiki.service;
 import com.backbook.wiki.domain.Ebook;
 import com.backbook.wiki.domain.EbookExample;
 import com.backbook.wiki.mapper.EbookMapper;
-import com.backbook.wiki.req.EbookReq;
-import com.backbook.wiki.resp.EbookResp;
+import com.backbook.wiki.req.EbookQueryReq;
+import com.backbook.wiki.req.EbookSaveReq;
+import com.backbook.wiki.resp.EbookQueryResp;
 import com.backbook.wiki.resp.PageResp;
 import com.backbook.wiki.util.CopyUtil;
 import com.github.pagehelper.PageHelper;
@@ -26,14 +27,14 @@ public class EbookService {
     private EbookMapper ebookMapper;
 
 
-    public PageResp<EbookResp> list(EbookReq ebookReq){
+    public PageResp<EbookQueryResp> list(EbookQueryReq ebookQueryReq){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        if(!ObjectUtils.isEmpty(ebookReq.getName())){
-            criteria.andNameLike("%"+ebookReq.getName()+"%");
+        if(!ObjectUtils.isEmpty(ebookQueryReq.getName())){
+            criteria.andNameLike("%"+ ebookQueryReq.getName()+"%");
         }
         //只针对于第一个sql有作用
-        PageHelper.startPage(ebookReq.getPage(),ebookReq.getSize());
+        PageHelper.startPage(ebookQueryReq.getPage(), ebookQueryReq.getSize());
         List<Ebook> ebooksList = ebookMapper.selectByExample(ebookExample);
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebooksList);
         LOG.info("总行数: {}",pageInfo.getTotal());
@@ -45,9 +46,9 @@ public class EbookService {
 //            BeanUtils.copyProperties(ebook,ebookResp);
 //            respList.add(ebookResp);
 //        }
-        PageResp<EbookResp> pageResp = new PageResp<>();
+        PageResp<EbookQueryResp> pageResp = new PageResp<>();
 
-        List<EbookResp> respList = CopyUtil.copyList(ebooksList, EbookResp.class);
+        List<EbookQueryResp> respList = CopyUtil.copyList(ebooksList, EbookQueryResp.class);
 
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(respList);
@@ -55,4 +56,16 @@ public class EbookService {
         return pageResp;
     }
 
+
+    public void save(EbookSaveReq req){
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+        if (ObjectUtils.isEmpty(req.getId())){
+            //新增
+            ebookMapper.insert(ebook);
+        }else {
+            //更新
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
+
+    }
 }
