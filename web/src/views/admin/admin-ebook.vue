@@ -26,7 +26,7 @@
     </a-layout-content>
   </a-layout>
   <a-modal title="电子书表单"
-           v-model:visiable="modalVisiable"
+           v-model:visible="modalVisiable"
            :confirm-loading="modalLoading"
            @ok="handleModalOk">
       <p>test</p>
