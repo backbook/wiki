@@ -22,8 +22,10 @@ CREATE TABLE wiki.demo(
 
 INSERT INTO wiki.demo (id, name, password, create_time, update_time) VALUES (2, 'backbook', 'backbook', 1620376675418, 1620376675418);
 
-drop table if exists `ebook`;
-create table `ebook`(
+create database wiki;
+
+drop table if exists wiki.`ebook`;
+create table wiki.`ebook`(
     `id` bigint not null comment 'id',
     `name` varchar(50) comment '名称',
     `category1_id` bigint comment '分类1',
