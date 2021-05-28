@@ -9,6 +9,7 @@ import com.backbook.wiki.req.EbookSaveReq;
 import com.backbook.wiki.resp.EbookQueryResp;
 import com.backbook.wiki.resp.PageResp;
 import com.backbook.wiki.util.CopyUtil;
+import com.backbook.wiki.util.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -25,6 +26,8 @@ public class EbookService {
     private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
     @Resource
     private EbookMapper ebookMapper;
+    @Resource
+    private SnowFlake snowFlake;
 
 
     public PageResp<EbookQueryResp> list(EbookQueryReq ebookQueryReq){
@@ -61,6 +64,7 @@ public class EbookService {
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())){
             //新增
+           ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
         }else {
             //更新
@@ -68,4 +72,9 @@ public class EbookService {
         }
 
     }
+
+    public void delete(Long id){
+        ebookMapper.deleteByPrimaryKey(id);
+    }
+
 }
