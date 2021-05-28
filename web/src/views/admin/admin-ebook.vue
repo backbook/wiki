@@ -193,7 +193,7 @@
       /**
        * handleDelete
        */
-      const handleDelete = (id: number) => {
+      const handleDelete = (id: string) => {
         modalLoading.value = true;
         axios.delete("/ebook/delete/"+id).then((response) =>{
           const data = response.data; //data = commonResp
