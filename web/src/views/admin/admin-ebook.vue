@@ -67,6 +67,7 @@
 
 <script lang="ts">
   import {defineComponent, onMounted, ref} from "vue";
+  import {message} from 'ant-design-vue'
   import axios from "axios";
   export default defineComponent({
     name: 'AdminEbook',
@@ -74,7 +75,7 @@
       const ebooks = ref()
       const pagination = ref({
         current: 1,
-        pageSize: 6,
+        pageSize: 10,
         total: 0
       });
       const loading = ref(false);
@@ -131,10 +132,15 @@
         }).then((response) =>{
           loading.value = false;
           const data = response.data;
-          ebooks.value = data.content.list;
-          //重置分页按钮
-          pagination.value.current = p.page;
-          pagination.value.total = data.content.total;
+          if(data.success){
+            ebooks.value = data.content.list;
+            //重置分页按钮
+            pagination.value.current = p.page;
+            pagination.value.total = data.content.total;
+          }else {
+            message.error(data.message);
+          }
+
         });
       }
 
@@ -153,21 +159,23 @@
 
 
       // ---- 表单 ------
-      const ebook = ref({})
-      const modalVisible = ref<boolean>(false)
-      const modalLoading = ref<boolean>(false)
+      const ebook = ref({});
+      const modalVisible = ref<boolean>(false);
+      const modalLoading = ref<boolean>(false);
       const handleModalOk = () => {
         modalLoading.value = true;
         axios.post("/ebook/save",ebook.value).then((response) =>{
           const data = response.data; //data = commonResp
+          modalLoading.value = false;
           if (data.success){
-            modalLoading.value = false;
             modalVisible.value = false;
             //重新加载列表
             handleQuery({
               page: pagination.value.current,
               size: pagination.value.pageSize
             });
+          }else {
+            message.error(data.message);
           }
 
         });

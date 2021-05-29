@@ -11,6 +11,7 @@ import com.backbook.wiki.service.EbookService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/ebook")
@@ -18,8 +19,9 @@ public class EbookController {
     @Resource
     private EbookService ebookService;
 
+    //@Valid校验生效
     @GetMapping("/list")
-    public CommonResp<PageResp<EbookQueryResp>> list(EbookQueryReq ebookQueryReq){
+    public CommonResp<PageResp<EbookQueryResp>> list(@Valid EbookQueryReq ebookQueryReq){
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(ebookQueryReq);
         resp.setMessage("this is ebook");
@@ -28,7 +30,7 @@ public class EbookController {
     }
 
     @PostMapping("/save")
-    public CommonResp<PageResp<EbookSaveResp>> save(@RequestBody EbookSaveReq ebookSaveReq){
+    public CommonResp<PageResp<EbookSaveResp>> save(@Valid @RequestBody EbookSaveReq ebookSaveReq){
         CommonResp<PageResp<EbookSaveResp>> resp = new CommonResp<>();
         ebookService.save(ebookSaveReq);
         return resp;
