@@ -58,4 +58,23 @@ INSERT INTO wiki.ebook (id, name, category1_id, category2_id, description, cover
 VALUES (12, 'hadoop入门到解放', 1, 2, '并发编程', '并发', 23, 13, 23);
 
 
+## 分类
+drop table if exists wiki.`category`;
+create table wiki.`category` (
+    `id` bigint not null comment 'id',
+    `parent` bigint not null default 0 comment '父id',
+    `name` varchar(50) not null comment '名称',
+    `sort` int comment '顺序',
+    primary key (`id`)
+) engine = innodb default character set = utf8mb4 comment '分类';
+
+insert into wiki.category (id,parent,name,sort) values (100,000,'前端开发',100);
+insert into wiki.category (id,parent,name,sort) values (101,100,'Vue',101);
+insert into wiki.category (id,parent,name,sort) values (102,100,'HTML & CSS',102);
+insert into wiki.category (id,parent,name,sort) values (103,000,'Java',200);
+insert into wiki.category (id,parent,name,sort) values (104,200,'基础应用',201);
+
+
+
+
 
