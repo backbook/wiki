@@ -71,8 +71,14 @@ create table wiki.`category` (
 insert into wiki.category (id,parent,name,sort) values (100,000,'前端开发',100);
 insert into wiki.category (id,parent,name,sort) values (101,100,'Vue',101);
 insert into wiki.category (id,parent,name,sort) values (102,100,'HTML & CSS',102);
-insert into wiki.category (id,parent,name,sort) values (103,000,'Java',200);
-insert into wiki.category (id,parent,name,sort) values (104,200,'基础应用',201);
+insert into wiki.category (id,parent,name,sort) values (200,000,'Java',200);
+insert into wiki.category (id,parent,name,sort) values (201,200,'基础应用',201);
+insert into wiki.category (id,parent,name,sort) values (202,200,'框架应用',202);
+insert into wiki.category (id,parent,name,sort) values (300,000,'Python',300);
+insert into wiki.category (id,parent,name,sort) values (301,300,'基础应用',301);
+insert into wiki.category (id,parent,name,sort) values (302,300,'进阶方向应用',302);
+insert into wiki.category (id,parent,name,sort) values (400,000,'数据库',400);
+insert into wiki.category (id,parent,name,sort) values (401,400,'数据库',401);
 
 
 
