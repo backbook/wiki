@@ -1,7 +1,7 @@
 package com.backbook.wiki.resp;
 
 public class CategoryQueryResp {
-    private Long id;
+    private String id;
 
     private Long parent;
 
@@ -9,12 +9,12 @@ public class CategoryQueryResp {
 
     private Integer sort;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id = id.toString();
     }
 
     public Long getParent() {
