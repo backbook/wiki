@@ -2,7 +2,7 @@ package com.backbook.wiki.resp;
 
 public class EbookQueryResp {
 
-    private String id;
+    private Long id;
 
     private String name;
 
@@ -20,12 +20,13 @@ public class EbookQueryResp {
 
     private Integer voteCount;
 
-    public String getId() {
+
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-        this.id = id.toString();
+        this.id = id;
     }
 
     public String getName() {

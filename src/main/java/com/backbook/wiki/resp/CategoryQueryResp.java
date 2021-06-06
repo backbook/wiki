@@ -1,7 +1,7 @@
 package com.backbook.wiki.resp;
 
 public class CategoryQueryResp {
-    private String id;
+    private Long id;
 
     private Long parent;
 
@@ -9,12 +9,12 @@ public class CategoryQueryResp {
 
     private Integer sort;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-        this.id = id.toString();
+        this.id = id;
     }
 
     public Long getParent() {
@@ -43,15 +43,11 @@ public class CategoryQueryResp {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", parent=").append(parent);
-        sb.append(", name=").append(name);
-        sb.append(", sort=").append(sort);
-        sb.append("]");
-        return sb.toString();
+        return "CategoryQueryResp{" +
+                "id=" + id +
+                ", parent=" + parent +
+                ", name='" + name + '\'' +
+                ", sort=" + sort +
+                '}';
     }
 }

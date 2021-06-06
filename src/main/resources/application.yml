@@ -8,7 +8,7 @@ spring:
     password: Server2008!
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      max-lifetime: 500000
+      connection-test-query: SELECT 1
 
 
 mybatis:
