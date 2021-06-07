@@ -98,10 +98,8 @@ export default defineComponent({
       })
     }
 
-    const handleClick = (value: any) => {
-      // console.log("menu click "+value.key)
-      isShowWelcome.value = value.key === "welcome";
-    }
+
+    var categoryId2 = 0;
 
 
     const pagination = ref({
@@ -110,13 +108,23 @@ export default defineComponent({
       total: 0
     });
 
+    const handleQueryEbook = () => {
+      handleQuery(
+          {
+            page: 1,
+            size: pagination.value.pageSize
+          }
+      )
+    }
+
 
     const handleQuery = (p:  Record<string, number>) =>{
       loading.value = true;
       axios.get("/ebook/list",{
         params: {
           page: p.page,
-          size: p.size
+          size: p.size,
+          categoryId2: categoryId2
         }
       }).then((response) =>{
         loading.value = false;
@@ -143,17 +151,24 @@ export default defineComponent({
     ];
 
 
+
+    const handleClick = (value: any) => {
+      // console.log("menu click "+value.key)
+      if (value.key === "welcome"){
+        isShowWelcome.value = true;
+      }else {
+        categoryId2 = value.key;
+        isShowWelcome.value = false;
+        handleQueryEbook();
+      }
+    }
+
+
     /**
      * 初始化触发
      */
     onMounted(()=>{
       handleQueryCategory();
-      handleQuery(
-          {
-            page: 1,
-            size: pagination.value.pageSize
-          }
-      )
     });
 
     return{
